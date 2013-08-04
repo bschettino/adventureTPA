@@ -4,8 +4,6 @@
  */
 package mazegame.models.abstracts;
 
-import mazegame.game.Game;
-
 /**
  *
  * @author SCHETTINO
@@ -15,6 +13,7 @@ public abstract class Door implements MapSite {
     protected Room room1;
     protected Room room2;
     protected boolean open;
+    private Maze maze;
 
     public Door() {
     }
@@ -23,11 +22,12 @@ public abstract class Door implements MapSite {
         room1 = r1;
         room2 = r2;
         open = false;
+        this.maze = r1.getMaze();
     }
 
     @Override
     public void enter() {
-        otherSideFrom(Game.getCurrentRoom()).enter();
+        otherSideFrom(maze.getCurrentRoom()).enter();
     }
 
     @Override
@@ -53,6 +53,7 @@ public abstract class Door implements MapSite {
 
     public void setRoom1(Room room1) {
         this.room1 = room1;
+        this.maze = room1.getMaze();
     }
 
     public Room getRoom2() {
@@ -61,6 +62,7 @@ public abstract class Door implements MapSite {
 
     public void setRoom2(Room room2) {
         this.room2 = room2;
+        this.maze = room2.getMaze();
     }
 
     public boolean isOpen() {

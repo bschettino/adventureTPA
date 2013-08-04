@@ -6,15 +6,16 @@ package mazegame.models.abstracts;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Observable;
 
 /**
  *
  * @author SCHETTINO
  */
-public abstract class Maze {
+public abstract class Maze extends Observable {
 
     protected Map<Integer, Room> rooms;
-    protected Room currentRoom;
+    private Room currentRoom;
 
     public Maze() {
         rooms = new HashMap<>();
@@ -26,5 +27,15 @@ public abstract class Maze {
 
     public Room roomNo(int number) {
         return rooms.get(number);
+    }
+
+    public void setCurrentRoom(Room room) {
+        currentRoom = room;
+        setChanged();
+        notifyObservers(currentRoom);
+    }
+
+    public Room getCurrentRoom() {
+        return currentRoom;
     }
 }

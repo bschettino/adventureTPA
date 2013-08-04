@@ -6,7 +6,7 @@ package mazegame.models.abstracts;
 
 import java.util.HashMap;
 import java.util.Map;
-import mazegame.game.Game;
+import mazegame.game.GameHelper;
 
 /**
  *
@@ -18,16 +18,18 @@ public abstract class Room implements MapSite {
     protected Map<Enum, MapSite> sides;
     protected int number;
     protected boolean isExit;
+    private Maze maze;
 
-    public Room() {
+    public Room(Maze maze) {
         number = currentNumber++;
         sides = new HashMap<>();
         isExit = false;
+        this.maze = maze;
     }
 
     @Override
     public void enter() {
-        Game.setCurrentRoom(this);
+        maze.setCurrentRoom(this);
     }
 
     public MapSite getSide(Side side) {
@@ -40,6 +42,10 @@ public abstract class Room implements MapSite {
 
     public int roomNumber() {
         return number;
+    }
+
+    public Maze getMaze() {
+        return maze;
     }
 
     public void printRoom() {
@@ -56,7 +62,7 @@ public abstract class Room implements MapSite {
     public boolean isExit() {
         return isExit;
     }
-    
+
     @Override
     public String legend() {
         return "R";

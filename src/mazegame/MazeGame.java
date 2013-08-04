@@ -5,10 +5,12 @@
 package mazegame;
 
 import java.io.IOException;
+import java.util.Observable;
+import java.util.Observer;
 import java.util.Scanner;
 import mazegame.factory.EnchantedMazeFactory;
 import mazegame.factory.MazeFactory;
-import mazegame.game.Game;
+import mazegame.game.GameHelper;
 import mazegame.models.abstracts.Door;
 import mazegame.models.abstracts.MapSite;
 import mazegame.models.abstracts.Maze;
@@ -19,28 +21,32 @@ import mazegame.models.abstracts.Side;
  *
  * @author SCHETTINO
  */
-public class MazeGame {
+public class MazeGame implements Observer {
 
-    /**
-     * @param args the command line arguments
-     */
+    private static Maze maze;
+
     public static void main(String[] args) throws IOException {
-        Maze maze = createMaze(new EnchantedMazeFactory());
+        maze = createMaze(new EnchantedMazeFactory());
+        MazeGame game = new MazeGame();
+        maze.addObserver(game);
+        game.play();
+    }
+
+    public void play() {
         Scanner keyboard = new Scanner(System.in);
-        Game.setCurrentRoom(maze.roomNo(0));
+        maze.setCurrentRoom(maze.roomNo(0));
         boolean fim = false;
         while (!fim) {
-            Game.getCurrentRoom().printRoom();
             char escolha = keyboard.nextLine().toLowerCase().charAt(0);
-            Side side = Game.charToSide(escolha);
+            Side side = GameHelper.charToSide(escolha);
             if ((side == null)) {
-                if (escolha == Game.EXIT_CHAR) {
+                if (escolha == GameHelper.EXIT_CHAR) {
                     fim = true;
                 }
             } else {
-                MapSite site = Game.getCurrentRoom().getSide(side);
+                MapSite site = maze.getCurrentRoom().getSide(side);
                 site.enter();
-                if (Game.getCurrentRoom().isExit()) {
+                if (maze.getCurrentRoom().isExit()) {
                     fim = true;
                 }
             }
@@ -49,14 +55,14 @@ public class MazeGame {
     }
 
     public static Maze createMaze(MazeFactory factory) {
-        Maze maze = factory.makeMaze();
+        Maze factoryMaze = factory.makeMaze();
 
-        Room r1 = factory.makeRoom();
+        Room r1 = factory.makeRoom(factoryMaze);
         r1.setSide(Side.NORTH, factory.makeWall());
         r1.setSide(Side.SOUTH, factory.makeWall());
         r1.setSide(Side.WEST, factory.makeWall());
 
-        Room r2 = factory.makeRoom();
+        Room r2 = factory.makeRoom(factoryMaze);
         r2.setSide(Side.EAST, factory.makeWall());
         r2.setSide(Side.SOUTH, factory.makeWall());
 
@@ -67,7 +73,7 @@ public class MazeGame {
         r1.setSide(Side.EAST, theDoor);
         r2.setSide(Side.WEST, theDoor);
 
-        Room r3 = factory.makeExit();
+        Room r3 = factory.makeExit(factoryMaze);
 
         Door secondDoor = factory.makeDoor();
         secondDoor.setRoom1(r2);
@@ -75,10 +81,15 @@ public class MazeGame {
         r2.setSide(Side.NORTH, secondDoor);
         r3.setSide(Side.SOUTH, secondDoor);
 
-        maze.addRoom(r1);
-        maze.addRoom(r2);
-        maze.addRoom(r3);
+        factoryMaze.addRoom(r1);
+        factoryMaze.addRoom(r2);
+        factoryMaze.addRoom(r3);
 
-        return maze;
+        return factoryMaze;
+    }
+
+    @Override
+    public void update(Observable o, Object o1) {
+        maze.getCurrentRoom().printRoom();
     }
 }

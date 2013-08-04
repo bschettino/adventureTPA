@@ -4,6 +4,7 @@
  */
 package mazegame.models.concrete.room;
 
+import mazegame.models.abstracts.Maze;
 import mazegame.models.abstracts.Room;
 import mazegame.models.abstracts.Side;
 
@@ -13,7 +14,11 @@ import mazegame.models.abstracts.Side;
  */
 public class EnchantedRoom extends Room {
 
-        @Override
+    public EnchantedRoom(Maze maze) {
+        super(maze);
+    }
+
+    @Override
     public void enter() {
         super.enter();
         System.out.println("Awesome! Enchanted Room!");

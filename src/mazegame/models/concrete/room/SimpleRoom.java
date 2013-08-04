@@ -4,6 +4,7 @@
  */
 package mazegame.models.concrete.room;
 
+import mazegame.models.abstracts.Maze;
 import mazegame.models.abstracts.Room;
 
 /**
@@ -11,6 +12,10 @@ import mazegame.models.abstracts.Room;
  * @author SCHETTINO
  */
 public class SimpleRoom extends Room {
+
+    public SimpleRoom(Maze maze) {
+        super(maze);
+    }
 
     @Override
     public void enter() {

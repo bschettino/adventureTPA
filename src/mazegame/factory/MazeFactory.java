@@ -16,7 +16,7 @@ import mazegame.models.abstracts.Wall;
 public abstract class MazeFactory {
     public abstract Maze makeMaze();
     public abstract Wall makeWall();
-    public abstract Room makeRoom();
+    public abstract Room makeRoom(Maze maze);
     public abstract Door makeDoor();
-    public abstract Room makeExit();
+    public abstract Room makeExit(Maze maze);
 }

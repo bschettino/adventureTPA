@@ -31,8 +31,8 @@ public class SimpleMazeFactory extends MazeFactory {
     }
 
     @Override
-    public Room makeRoom() {
-        return new SimpleRoom();
+    public Room makeRoom(Maze maze) {
+        return new SimpleRoom(maze);
     }
 
     @Override
@@ -41,7 +41,7 @@ public class SimpleMazeFactory extends MazeFactory {
     }
 
     @Override
-    public Room makeExit() {
-        return new ExitRoom();
+    public Room makeExit(Maze maze) {
+        return new ExitRoom(maze);
     }
 }

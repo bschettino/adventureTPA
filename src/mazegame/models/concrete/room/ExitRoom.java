@@ -4,6 +4,7 @@
  */
 package mazegame.models.concrete.room;
 
+import mazegame.models.abstracts.Maze;
 import mazegame.models.abstracts.Room;
 
 /**
@@ -12,14 +13,18 @@ import mazegame.models.abstracts.Room;
  */
 public class ExitRoom extends Room {
 
-    public ExitRoom() {
-        super();
+    public ExitRoom(Maze maze) {
+        super(maze);
         isExit = true;
     }
 
     @Override
     public void enter() {
         super.enter();
+    }
+
+    @Override
+    public void printRoom() {
         System.out.println("I am out! \\o/");
     }
 }
