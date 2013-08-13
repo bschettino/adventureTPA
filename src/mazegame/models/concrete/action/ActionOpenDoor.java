@@ -18,17 +18,20 @@ import mazegame.models.abstracts.Side;
 public class ActionOpenDoor extends Action {
 
     @Override
-    public void perform(MapSite site) {
+    public boolean perform(MapSite site) {
         if (site instanceof Door) {
             Door door = (Door) site;
             if (!door.isOpen()) {
                 door.setOpen(true);
                 System.out.println("Yes! I opened the door!");
+                return true;
             } else {
                 System.out.println("This door is already open.");
+                return false;
             }
         } else {
             System.out.println("You can only use this item on a door.");
+            return false;
         }
     }
 }

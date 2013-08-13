@@ -4,7 +4,8 @@
  */
 package mazegame.game;
 
-import java.util.List;
+import java.util.Iterator;
+import mazegame.models.abstracts.AbstractBag;
 import mazegame.models.abstracts.Item;
 import mazegame.models.abstracts.Maze;
 
@@ -15,7 +16,7 @@ import mazegame.models.abstracts.Maze;
 public class GameObjects {
 
     private static Maze _maze;
-    private static List<Item> _bag;
+    private static AbstractBag _bag;
 
     public static Maze getMaze() {
         return _maze;
@@ -25,23 +26,26 @@ public class GameObjects {
         GameObjects._maze = maze;
     }
 
-    public static List<Item> getBag() {
+    public static AbstractBag getBag() {
         return _bag;
     }
 
-    public static void setBag(List<Item> _bag) {
+    public static void setBag(AbstractBag _bag) {
         GameObjects._bag = _bag;
     }
 
     public static void printBag() {
-        if (_bag.isEmpty()) {
-            GameHelper.printEmptyBag();
-        } else {
+        Iterator<Item> iterator = _bag.createIterator();
+        if (iterator.hasNext()) {
             System.out.println("\nChoose one item:");
-            for (int i = 0; i < _bag.size(); i++) {
-                Item item = _bag.get(i);
-                System.out.println(i + " : " + item.getName());
+            int i = 0;
+            while (iterator.hasNext()) {
+                Item item = iterator.next();
+                System.out.println(i++ + " : " + item.getName());
             }
+        } else {
+            GameHelper.printEmptyBag();
         }
-    }
+
+    } 
 }

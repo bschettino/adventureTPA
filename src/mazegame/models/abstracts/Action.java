@@ -10,6 +10,6 @@ package mazegame.models.abstracts;
  */
 public abstract class Action {
 
-    public abstract void perform(MapSite site);
+    public abstract boolean perform(MapSite site);
     
 }

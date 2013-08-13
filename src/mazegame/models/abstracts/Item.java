@@ -21,8 +21,8 @@ public abstract class Item {
         this.name = newName;
     }
 
-    public void use(MapSite site) {
-        action.perform(site);
+    public boolean use(MapSite site) {
+        return action.perform(site);
     }
 
     public Action getAction() {
