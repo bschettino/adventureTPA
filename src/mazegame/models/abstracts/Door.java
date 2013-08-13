@@ -14,20 +14,27 @@ public abstract class Door implements MapSite {
     protected Room room2;
     protected boolean open;
     private Maze maze;
+    private Item item;
 
     public Door() {
+        open = true;
     }
 
     public Door(Room r1, Room r2) {
         room1 = r1;
         room2 = r2;
-        open = false;
+        open = true;
         this.maze = r1.getMaze();
     }
 
     @Override
     public void enter() {
-        otherSideFrom(maze.getCurrentRoom()).enter();
+        if (this.open) {
+            this.printMsg();
+            otherSideFrom(maze.getCurrentRoom()).enter();
+        } else {
+            System.out.println("This door is closed. It requires a key to open it.");
+        }
     }
 
     @Override
@@ -72,4 +79,16 @@ public abstract class Door implements MapSite {
     public void setOpen(boolean open) {
         this.open = open;
     }
+
+    @Override
+    public Item getItem() {
+        return item;
+    }
+
+    @Override
+    public void setItem(Item item) {
+        this.item = item;
+    }
+
+    protected abstract void printMsg();
 }

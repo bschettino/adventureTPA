@@ -5,16 +5,16 @@
 package mazegame;
 
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.InputMismatchException;
 import java.util.Observable;
 import java.util.Observer;
 import java.util.Scanner;
 import mazegame.factory.EnchantedMazeFactory;
-import mazegame.factory.MazeFactory;
 import mazegame.game.GameHelper;
-import mazegame.models.abstracts.Door;
+import mazegame.game.GameObjects;
+import mazegame.models.abstracts.Item;
 import mazegame.models.abstracts.MapSite;
-import mazegame.models.abstracts.Maze;
-import mazegame.models.abstracts.Room;
 import mazegame.models.abstracts.Side;
 
 /**
@@ -23,73 +23,88 @@ import mazegame.models.abstracts.Side;
  */
 public class MazeGame implements Observer {
 
-    private static Maze maze;
-
     public static void main(String[] args) throws IOException {
-        maze = createMaze(new EnchantedMazeFactory());
+        GameObjects.setMaze(MazeMap.createMaze(new EnchantedMazeFactory()));
+        GameObjects.setBag(new ArrayList<Item>());
         MazeGame game = new MazeGame();
-        maze.addObserver(game);
+        GameObjects.getMaze().addObserver(game);
         game.play();
     }
 
     public void play() {
         Scanner keyboard = new Scanner(System.in);
-        maze.setCurrentRoom(maze.roomNo(0));
+        GameObjects.getMaze().setCurrentRoom(GameObjects.getMaze().roomNo(0));
         boolean fim = false;
         while (!fim) {
+            GameHelper.printSides();
             char escolha = keyboard.nextLine().toLowerCase().charAt(0);
             Side side = GameHelper.charToSide(escolha);
             if ((side == null)) {
-                if (escolha == GameHelper.EXIT_CHAR) {
-                    fim = true;
+                switch (escolha) {
+                    case GameHelper.EXIT_CHAR: {
+                        fim = true;
+                        break;
+                    }
+                    case GameHelper.PRINT_ROOM: {
+                        GameObjects.getMaze().getCurrentRoom().printRoom();
+                        break;
+                    }
+                    case GameHelper.PRINT_BAG: {
+                        GameObjects.printBag();
+                        break;
+                    }
+                    default: {
+                        GameHelper.printInvalidAction();
+                    }
                 }
             } else {
-                MapSite site = maze.getCurrentRoom().getSide(side);
-                site.enter();
-                if (maze.getCurrentRoom().isExit()) {
-                    fim = true;
+                MapSite site = GameObjects.getMaze().getCurrentRoom().getSide(side);
+                GameHelper.printActions();
+                escolha = keyboard.nextLine().toLowerCase().charAt(0);
+                switch (escolha) {
+                    case GameHelper.ENTER_ROOM: {
+                        site.enter();
+                        if (GameObjects.getMaze().getCurrentRoom().isExit()) {
+                            fim = true;
+                        }
+                        break;
+                    }
+                    case GameHelper.FIND_ITEM: {
+                        if (site.getItem() != null) {
+                            Item item = site.getItem();
+                            GameObjects.getBag().add(item);
+                            GameHelper.printItem(item);
+                            site.setItem(null);
+                        } else {
+                            GameHelper.printItemNotFound();
+                        }
+                        break;
+                    }
+                    case GameHelper.USE_ITEM: {
+                        GameObjects.printBag();
+                        if (!GameObjects.getBag().isEmpty()) {
+                            try {
+                                int itemEscolhido = keyboard.nextInt();
+                                if (itemEscolhido < GameObjects.getBag().size()) {
+                                    GameObjects.getBag().get(itemEscolhido).use(site);
+                                }
+                                keyboard.nextLine();
+                            } catch (InputMismatchException e) {
+                                GameHelper.printInvalidAction();
+                            }
+                        }
+                        break;
+                    }
+
                 }
+
             }
 
         }
     }
 
-    public static Maze createMaze(MazeFactory factory) {
-        Maze factoryMaze = factory.makeMaze();
-
-        Room r1 = factory.makeRoom(factoryMaze);
-        r1.setSide(Side.NORTH, factory.makeWall());
-        r1.setSide(Side.SOUTH, factory.makeWall());
-        r1.setSide(Side.WEST, factory.makeWall());
-
-        Room r2 = factory.makeRoom(factoryMaze);
-        r2.setSide(Side.EAST, factory.makeWall());
-        r2.setSide(Side.SOUTH, factory.makeWall());
-
-        Door theDoor = factory.makeDoor();
-        theDoor.setRoom1(r1);
-        theDoor.setRoom2(r2);
-
-        r1.setSide(Side.EAST, theDoor);
-        r2.setSide(Side.WEST, theDoor);
-
-        Room r3 = factory.makeExit(factoryMaze);
-
-        Door secondDoor = factory.makeDoor();
-        secondDoor.setRoom1(r2);
-        secondDoor.setRoom2(r3);
-        r2.setSide(Side.NORTH, secondDoor);
-        r3.setSide(Side.SOUTH, secondDoor);
-
-        factoryMaze.addRoom(r1);
-        factoryMaze.addRoom(r2);
-        factoryMaze.addRoom(r3);
-
-        return factoryMaze;
-    }
-
     @Override
     public void update(Observable o, Object o1) {
-        maze.getCurrentRoom().printRoom();
+        GameObjects.getMaze().getCurrentRoom().printRoom();
     }
 }

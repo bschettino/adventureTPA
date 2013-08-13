@@ -14,6 +14,7 @@ import mazegame.models.abstracts.Room;
 public class MagicDoor extends Door {
 
     public MagicDoor() {
+        super();
     }
 
     public MagicDoor(Room r1, Room r2) {
@@ -22,7 +23,11 @@ public class MagicDoor extends Door {
 
     @Override
     public void enter() {
-        System.out.println("Is this a magic doooooooor?");
         super.enter();
+    }
+
+    @Override
+    protected void printMsg() {
+        System.out.println("Is this a magic doooooooor?");
     }
 }

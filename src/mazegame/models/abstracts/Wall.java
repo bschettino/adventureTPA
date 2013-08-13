@@ -10,6 +10,18 @@ package mazegame.models.abstracts;
  */
 public abstract class Wall implements MapSite {
 
+    private Item item;
+
+    @Override
+    public Item getItem() {
+        return item;
+    }
+
+    @Override
+    public void setItem(Item item) {
+        this.item = item;
+    }
+
     @Override
     public void enter() {
     }

@@ -8,9 +8,8 @@ package mazegame.models.abstracts;
  *
  * @author SCHETTINO
  */
-public interface MapSite {
-    public void setItem(Item item);
-    public Item getItem();
-    public void enter();
-    public String legend();
-}   
+public abstract class Action {
+
+    public abstract void perform(MapSite site);
+    
+}

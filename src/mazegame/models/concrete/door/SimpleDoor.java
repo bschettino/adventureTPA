@@ -23,7 +23,11 @@ public class SimpleDoor extends Door {
 
     @Override
     public void enter() {
-        System.out.println("Let's see what is on the other side of this door...");
         super.enter();
+    }
+
+    @Override
+    protected void printMsg() {
+        System.out.println("Let's see what is on the other side of this door...");
     }
 }

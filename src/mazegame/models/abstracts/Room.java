@@ -19,10 +19,12 @@ public abstract class Room implements MapSite {
     protected int number;
     protected boolean isExit;
     private Maze maze;
+    private Item item;
 
     public Room(Maze maze) {
         number = currentNumber++;
         sides = new HashMap<>();
+        sides.put(Side.CENTER, this);
         isExit = false;
         this.maze = maze;
     }
@@ -46,6 +48,16 @@ public abstract class Room implements MapSite {
 
     public Maze getMaze() {
         return maze;
+    }
+
+    @Override
+    public Item getItem() {
+        return item;
+    }
+
+    @Override
+    public void setItem(Item item) {
+        this.item = item;
     }
 
     public void printRoom() {
