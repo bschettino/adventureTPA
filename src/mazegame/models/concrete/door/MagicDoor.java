@@ -28,6 +28,6 @@ public class MagicDoor extends Door {
 
     @Override
     protected void printMsg() {
-        System.out.println("Is this a magic doooooooor?");
+        System.out.println("\nIs this a magic doooooooor?\n");
     }
 }

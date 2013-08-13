@@ -14,6 +14,6 @@ public class SimpleWall extends Wall {
 
     @Override
     public void enter() {
-        System.out.println("Ooutch! It's a Wall!");
+        System.out.println("\nOoutch! It's a Wall!\n");
     }
 }

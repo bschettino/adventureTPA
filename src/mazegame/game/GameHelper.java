@@ -48,30 +48,30 @@ public class GameHelper {
     }
 
     public static void printActions() {
-        System.out.println("Choose one action: ");
+        System.out.println("\nChoose one action: ");
         System.out.println("e : Enter");
         System.out.println("f : Find item");
-        System.out.println("u : Use item");
+        System.out.println("u : Use item\n");
     }
 
     public static void printInvalidAction() {
-        System.out.println("Invalid action.");
+        System.out.println("\nInvalid action.\n");
     }
 
     public static void printItemNotFound() {
-        System.out.println("Found nothing.");
+        System.out.println("\nFound nothing.\n");
     }
 
     public static void printItem(Item item) {
-        System.out.println("Found " + item.getName() + ".");
+        System.out.println("\nFound " + item.getName() + ".\n");
     }
 
     public static void printEmptyBag() {
-        System.out.println("Your bag is empty.");
+        System.out.println("\nYour bag is empty.\n");
     }
 
     public static void printSides() {
-        System.out.println("Choose one side or type 'x' to exit or 'p' to print the current room or 'b' to print your bag: ");
+        System.out.println("\nChoose one side or type 'x' to exit or 'p' to print the current room or 'b' to print your bag: ");
         System.out.println("w : North");
         System.out.println("s : South");
         System.out.println("a : West");

@@ -14,6 +14,6 @@ public class BombedWall extends Wall {
 
     @Override
     public void enter() {
-        System.out.println("OMG! Bombed Wall!");
+        System.out.println("\nOMG! Bombed Wall!\n");
     }
 }

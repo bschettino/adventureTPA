@@ -20,6 +20,6 @@ public class SimpleRoom extends Room {
     @Override
     public void enter() {
         super.enter();
-        System.out.println("Just another Room...");
+        System.out.println("\nJust another Room...\n");
     }
 }

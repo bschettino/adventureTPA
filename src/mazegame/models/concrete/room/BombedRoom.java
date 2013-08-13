@@ -21,6 +21,6 @@ public class BombedRoom extends Room {
     @Override
     public void enter() {
         super.enter();
-        System.out.println("Warning! Bombed Room!");
+        System.out.println("\nWarning! Bombed Room!\n");
     }
 }

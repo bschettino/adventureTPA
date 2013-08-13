@@ -25,6 +25,6 @@ public class ExitRoom extends Room {
 
     @Override
     public void printRoom() {
-        System.out.println("I am out! \\o/");
+        System.out.println("\n\nI am out! \\o/");
     }
 }

@@ -9,5 +9,5 @@ package mazegame.models.abstracts;
  * @author SCHETTINO
  */
 public enum Side {
-    NORTH, EAST, WEST, SOUTH, CENTER
+    NORTH, EAST, WEST, SOUTH
 }

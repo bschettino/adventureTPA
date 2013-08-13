@@ -33,7 +33,7 @@ public abstract class Door implements MapSite {
             this.printMsg();
             otherSideFrom(maze.getCurrentRoom()).enter();
         } else {
-            System.out.println("This door is closed. It requires a key to open it.");
+            System.out.println("\nThis door is closed. It requires a key to open it.");
         }
     }
 

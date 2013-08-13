@@ -21,6 +21,6 @@ public class EnchantedRoom extends Room {
     @Override
     public void enter() {
         super.enter();
-        System.out.println("Awesome! Enchanted Room!");
+        System.out.println("\nAwesome! Enchanted Room!\n");
     }
 }

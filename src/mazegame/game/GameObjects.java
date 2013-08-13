@@ -4,7 +4,6 @@
  */
 package mazegame.game;
 
-import java.util.ArrayList;
 import java.util.List;
 import mazegame.models.abstracts.Item;
 import mazegame.models.abstracts.Maze;
@@ -38,7 +37,7 @@ public class GameObjects {
         if (_bag.isEmpty()) {
             GameHelper.printEmptyBag();
         } else {
-            System.out.println("Escolha um item:");
+            System.out.println("\nChoose one item:");
             for (int i = 0; i < _bag.size(); i++) {
                 Item item = _bag.get(i);
                 System.out.println(i + " : " + item.getName());

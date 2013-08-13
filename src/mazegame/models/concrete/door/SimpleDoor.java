@@ -28,6 +28,6 @@ public class SimpleDoor extends Door {
 
     @Override
     protected void printMsg() {
-        System.out.println("Let's see what is on the other side of this door...");
+        System.out.println("\nLet's see what is on the other side of this door...\n");
     }
 }
