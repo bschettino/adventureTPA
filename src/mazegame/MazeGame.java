@@ -4,6 +4,7 @@
  */
 package mazegame;
 
+import mazegame.models.mazeMap.MazeMap;
 import java.io.IOException;
 import java.util.InputMismatchException;
 import java.util.Observable;
@@ -12,6 +13,7 @@ import java.util.Scanner;
 import mazegame.factory.EnchantedMazeFactory;
 import mazegame.game.GameHelper;
 import mazegame.game.GameObjects;
+import mazegame.models.abstracts.AbstractMazeMap;
 import mazegame.models.abstracts.Item;
 import mazegame.models.abstracts.MapSite;
 import mazegame.models.abstracts.Side;
@@ -24,7 +26,8 @@ import mazegame.models.concrete.bag.Bag;
 public class MazeGame implements Observer {
 
     public static void main(String[] args) throws IOException {
-        GameObjects.setMaze(MazeMap.createMaze(new EnchantedMazeFactory()));
+        AbstractMazeMap mazeMap = new MazeMap();
+        GameObjects.setMaze(mazeMap.createMaze(new EnchantedMazeFactory()));
         GameObjects.setBag(new Bag());
         MazeGame game = new MazeGame();
         GameObjects.getMaze().addObserver(game);

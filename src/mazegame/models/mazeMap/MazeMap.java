@@ -2,9 +2,10 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-package mazegame;
+package mazegame.models.mazeMap;
 
 import mazegame.factory.MazeFactory;
+import mazegame.models.abstracts.AbstractMazeMap;
 import mazegame.models.abstracts.Door;
 import mazegame.models.abstracts.Maze;
 import mazegame.models.abstracts.Room;
@@ -16,9 +17,10 @@ import mazegame.models.concrete.item.Key;
  *
  * @author SCHETTINO
  */
-public class MazeMap {
+public class MazeMap extends AbstractMazeMap {
 
-    public static Maze createMaze(MazeFactory factory) {
+    @Override
+    public Maze createMaze(MazeFactory factory) {
         Maze factoryMaze = factory.makeMaze();
 
         Room r1 = factory.makeRoom(factoryMaze);
